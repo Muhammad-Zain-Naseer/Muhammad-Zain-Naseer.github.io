@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Project | Muhammad Zain Naseer</title>
+<meta name="description" content="Project details from Muhammad Zain Naseer's portfolio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&family=Jost:wght@500;600;700&display=swap" rel="stylesheet">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Muhammad Zain Naseer">
+<meta property="og:title" content="Muhammad Zain Naseer | Full-Stack Engineer">
+<meta property="og:description" content="Full-stack engineer at INDUS Technologies. I build project governance software for WAPDA, full-stack products and AI automations.">
+<meta property="og:url" content="https://zainnaseer.com/">
+<meta property="og:image" content="https://zainnaseer.com/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://zainnaseer.com/og-image.jpg">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header>
+  <nav aria-label="Primary">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#experience">Experience</a></li>
+      <li><a href="index.html#projects">Projects</a></li>
+      <li><a href="mailto:zainnaseer1990@gmail.com">Contact</a></li>
+      <div class="pill" aria-hidden="true"></div>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <div class="p-hero">
+    <div class="hero-glows" aria-hidden="true">
+      <div class="glow blue"></div>
+      <div class="glow teal"></div>
+      <div class="glow violet"></div>
+    </div>
+    <div class="hero-inner" id="p-hero"></div>
+  </div>
+
+  <div class="sheet">
+    <div class="glow blue g1" aria-hidden="true"></div>
+    <div class="glow teal g2" aria-hidden="true"></div>
+    <div class="glow violet g3" aria-hidden="true"></div>
+
+    <div class="container detail" id="p-body"></div>
+
+    <footer class="reveal">
+      <div class="foot-box">
+        <div class="foot-name">Zain<br>Naseer.</div>
+        <div class="foot-cols">
+          <div>
+            <h4>Explore</h4>
+            <a href="index.html">Home</a>
+            <a href="index.html#experience">Experience</a>
+            <a href="index.html#projects">Projects</a>
+          </div>
+          <div>
+            <h4>Let's Connect</h4>
+            <a href="mailto:zainnaseer1990@gmail.com">Email</a>
+            <a href="https://www.linkedin.com/in/muhammad-zain-naseer/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://github.com/Muhammad-Zain-Naseer" target="_blank" rel="noopener">GitHub</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom"><span>© <span id="yr">2026</span></span><span>Muhammad Zain Naseer.</span></div>
+    </footer>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+  <button class="btn icon close" type="button" aria-label="Close preview">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+  </button>
+  <figure><img alt=""><figcaption></figcaption></figure>
+</div>
+
+<script src="projects.js"></script>
+<script>
+  const all = window.PROJECTS;
+  const slug = new URLSearchParams(location.search).get('p');
+  const idx = all.findIndex(p => p.slug === slug);
+  const p = all[idx];
+  const hero = document.getElementById('p-hero');
+  const body = document.getElementById('p-body');
+  const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>';
+  const backArrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>';
+
+  const shot = (g, extra = '') => `<button class="shot-btn ${extra}" type="button" data-src="${g.src}" data-alt="${g.alt}"><img src="${g.src}" alt="${g.alt}" loading="lazy"></button>`;
+  const section = (title, inner) => `<section class="reveal"><div class="sec-head"><h2>${title}</h2></div>${inner}</section>`;
+
+  if (!p) {
+    hero.innerHTML = `<h1>Project not found</h1><p class="p-sub">That project doesn't exist. <a class="inline" href="index.html#projects">See all projects</a>.</p>`;
+  } else {
+    document.title = `${p.name} | Muhammad Zain Naseer`;
+    document.querySelector('meta[name=description]').content = p.desc;
+    hero.innerHTML = `
+      <a class="back" href="index.html#projects">${backArrow} All projects</a>
+      <h1>${p.name}</h1>
+      <p class="p-sub">${p.desc}</p>
+      ${p.meta ? `<p class="p-meta">${p.meta}</p>` : ''}
+      ${p.url ? `<div class="p-actions"><a class="btn" href="${p.url}" target="_blank" rel="noopener">Visit live site ${arrow}</a></div>` : ''}`;
+
+    const gallery = p.gallery || [];
+    let html = '';
+    if (p.context) {
+      const img = gallery[0] && !gallery[0].wide ? shot(gallery[0], p.phoneGallery ? 'phone' : '') : '';
+      html += section('Context & Motivation', `<div class="split${img ? '' : ' solo'}${p.phoneGallery ? ' with-phone' : ''}"><div>${p.context.map(t => `<p>${t}</p>`).join('')}</div>${img}</div>`);
+    }
+    if (p.role) html += section('My Role', p.role.map(t => `<p>${t}</p>`).join(''));
+    html += section('Technologies Used', `<div class="tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`);
+    if (p.features) {
+      const g = gallery[1] && !gallery[1].wide ? gallery[1] : null;
+      html += section('Key Features', `<div class="split${g ? '' : ' solo'}${p.phoneGallery ? ' with-phone' : ''}"><ul class="features">${p.features.map(f => `<li>${f}</li>`).join('')}</ul>${g ? shot(g, p.phoneGallery ? 'phone' : '') : ''}</div>`);
+    }
+    if (gallery.length) {
+      html += section('Gallery', p.phoneGallery
+        ? `<div class="gallery phones">${gallery.map(g => shot(g)).join('')}</div>`
+        : `<div class="gallery">${gallery.map((g, i) => shot(g, g.wide || (i === gallery.length - 1 && i % 2 === 0) ? 'wide' : '')).join('')}</div>`);
+    }
+    if (p.outcome) html += section('Outcome', p.outcome.map(t => `<p>${t}</p>`).join(''));
+    if (p.links) html += section('Links', `<div class="links">${p.links.map(l => `<a href="${l.url}" target="_blank" rel="noopener">${l.label}</a>`).join('')}</div>`);
+
+    const prev = all[(idx - 1 + all.length) % all.length];
+    const next = all[(idx + 1) % all.length];
+    html += `<section class="reveal"><div class="pager">
+      <a href="project.html?p=${prev.slug}"><small>Previous project</small><b>${prev.name}</b></a>
+      <a class="next" href="project.html?p=${next.slug}"><small>Next project</small><b>${next.name}</b></a>
+    </div></section>`;
+    body.innerHTML = html;
+  }
+
+  // ---- Lightbox ----
+  const lb = document.getElementById('lightbox');
+  const lbImg = lb.querySelector('img');
+  const lbCap = lb.querySelector('figcaption');
+  let lastFocus = null;
+  const closeLb = () => { lb.classList.remove('open'); lastFocus?.focus(); };
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.shot-btn');
+    if (b) { lastFocus = b; lbImg.src = b.dataset.src; lbImg.alt = b.dataset.alt; lbCap.textContent = b.dataset.alt; lb.classList.add('open'); lb.querySelector('.close').focus(); return; }
+    if (lb.classList.contains('open') && (e.target === lb || e.target.closest('.close'))) closeLb();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
+
+  // ---- Nav hover pill ----
+  const navUl = document.querySelector('nav ul');
+  const pill = navUl.querySelector('.pill');
+  navUl.querySelectorAll('li').forEach((li, i) => {
+    li.addEventListener('mouseenter', () => { pill.style.transform = `translateX(${i * 100}%)`; pill.style.opacity = 1; });
+  });
+  navUl.addEventListener('mouseleave', () => { pill.style.opacity = 0; });
+
+  // ---- Reveal on scroll ----
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
